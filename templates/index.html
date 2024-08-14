@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthy assist</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="icon" href="data:," /> <!-- Empty favicon to prevent 404 errors -->
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #201526;
+        }
+
+        .img-container {
+            text-align: center;
+            padding:10px;
+            margin-bottom: 30px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, .1);
+        }
+
+        .img-container img {
+            width: 80px;
+            height: 80px;
+            border-radius: 2px;
+        }
+
+        .chat-container {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            max-width: 70%;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .message.user {
+            background-color: #e1ffc7;
+            align-self: flex-end;
+        }
+
+        .message.bot {
+            background-color: #f1f1f1;
+            align-self: flex-start;
+        }
+
+        .message .icon {
+            margin-right: 10px;
+        }
+        .message .icon2{
+            position: absolute;
+            bottom: 5px;
+            right: 10px;
+        }
+
+        footer {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            box-shadow: 0px -2px 5px rgba(0, 0, 0, .1);
+        }
+
+        footer input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            margin: 0 10px;
+            background-color: #0b303b;
+            border: none;
+            color: #fff;
+        }
+
+        footer span {
+            font-size: 1.4em;
+            cursor: pointer;
+            color:#6EACDA ;
+        }
+    </style>
+</head>
+<body>
+    <nav class="img-container">
+        <img src="../static/main.webp" alt="DocChat Logo">
+    </nav>
+    <div class="container chat-container">
+        <!-- Chat messages will be dynamically inserted here -->
+    </div>
+    <footer>
+        <span><i class="fa-regular fa-image"></i></span>
+        <input type="text" placeholder="Type your message...">
+        <span id="send"><i class="fa-regular fa-paper-plane"></i></span>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sendButton = document.querySelector('footer #send');
+            const inputField = document.querySelector('footer input');
+
+            sendButton.addEventListener('click', function() {
+                const message = inputField.value;
+                if (message.trim() !== "") {
+                    addMessage('user', message);
+                    inputField.value = "";
+
+                    // Send message to server
+                    fetch('/send_message', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ message: message })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            console.error('Error from server:', data.error);
+                        } else {
+                            addMessage('bot', data.response);
+                        }
+                    })
+                    .catch(error => console.error('Fetch error:', error));
+                }
+            });
+
+            function addMessage(sender, text) {
+                const messageContainer = document.createElement('div');
+                messageContainer.classList.add('message', sender);
+
+                if (sender === 'bot') {
+                    const icon = document.createElement('i');
+                    icon.classList.add('fa-solid', 'fa-user-doctor', 'icon');
+                    messageContainer.appendChild(icon);
+                    const icon2 = document.createElement('i');
+                    icon2.classList.add('fa-solid', 'fa-microphone', 'icon2');
+                    messageContainer.appendChild(icon2);
+                }
+
+                const messageText = document.createElement('span');
+                messageText.innerText = text;
+                messageContainer.appendChild(messageText);
+
+                document.querySelector('.chat-container').appendChild(messageContainer);
+                document.querySelector('.chat-container').scrollTop = document.querySelector('.chat-container').scrollHeight;
+            }
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>

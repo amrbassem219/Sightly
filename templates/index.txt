@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DocChat</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .img-container {
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .img-container img {
+            width: 300px;
+            height: 300px;
+            border-radius: 20px;
+        }
+
+        .ticket {
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            transition: box-shadow 0.3s ease-in-out;
+            background-color: #f8f9fa;
+            padding: 20px;
+            margin: 10px;
+        }
+
+        .ticket:hover {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .ticket a {
+            text-decoration: none;
+            color: #000;
+        }
+
+        .ticket h4 {
+            margin-bottom: 10px;
+        }
+
+        .ticket p {
+            margin-bottom: 0;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="img-container">
+        <img src="../static/main.PNG" alt="DocChat Logo">
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="ticket">
+                    <a href="#">
+                        <h4>Cancer</h4>
+                        <p>Diagnose your disease now</p>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="ticket">
+                    <a href="#">
+                        <h4>Cancer</h4>
+                        <p>Diagnose your disease now</p>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="ticket">
+                    <a href="#">
+                        <h4>Cancer</h4>
+                        <p>Diagnose your disease now</p>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="ticket">
+                    <a href="#">
+                        <h4>Cancer</h4>
+                        <p>Diagnose your disease now</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
